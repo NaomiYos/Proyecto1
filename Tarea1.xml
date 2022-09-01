@@ -14,7 +14,7 @@
             <celda f="2" c="2" />
             <celda f="6" c="6" />
             <celda f="6" c="7" />
-            <celda f="7" c="6" />
+            <celda f="5" c="6" />
             <celda f="7" c="7" />
         </rejilla>
     </paciente>
@@ -32,7 +32,7 @@
             <celda f="2" c="2" />
             <celda f="6" c="6" />
             <celda f="6" c="7" />
-            <celda f="7" c="6" />
+            <celda f="9" c="6" />
             <celda f="7" c="7" />
         </rejilla>
     </paciente>
@@ -50,7 +50,7 @@
             <celda f="2" c="2" />
             <celda f="6" c="6" />
             <celda f="6" c="7" />
-            <celda f="7" c="6" />
+            <celda f="8" c="6" />
             <celda f="7" c="7" />
         </rejilla>
     </paciente>
