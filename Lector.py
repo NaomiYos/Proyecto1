@@ -2,11 +2,19 @@
 import xml.etree.cElementTree as ET
 from listadatos import Listasimple
 from Matriz import MatrizOrtogonal 
-from CelulaLista import CelulaLista
 from colorama import Fore, Back, Style
 x=Listasimple()
+matrizOrtogonal = MatrizOrtogonal()
+class CelulaLista:
+   def __init__(self,id,estado,f,c):
+    self.id=id
+    self.estado=estado
+    self.f=f
+    self.c=c
+   def __repr__(self):
+        return str(self.__dict__)
 lista=[]
-
+lsize=[]
 def cargarArchivo(ruta):
     archivo= ET.parse(ruta)
     raiz=archivo.getroot()
@@ -24,8 +32,8 @@ def cargarArchivo(ruta):
                for age in subsubelem.iter('edad'):
                  varage=age.text
                 # print(varage)
-               paciente=x.CrearPaciente(cont,nombre,varage)
-               lista.append(paciente)
+               x.CrearPaciente(cont,nombre,varage)
+
 
               
             for periodo in subelem.iter('periodos'):
@@ -36,58 +44,68 @@ def cargarArchivo(ruta):
                 mat=int(matriz)
                 if mat%10 !=0:
                  print("matriz no es múltiplo de 10, ingrese otra matriz")
-               # else:
-                #CrearMatriz(mat)
+                else:
+                  lsize.append(mat)  
+                  print("")
             for reja in subelem.iter('rejilla'):
                  for celda in reja.iter('celda'):
                     
                     f=celda.attrib['f']
                     c=celda.attrib['c']
-
-                    #cl=CelulaLista()
                     print("filas "+f+"columnas "+c+"contador "+ str(cont))
-                    tejido=CelulaLista(cont,1,f,c)
+                    tejido=CelulaLista(cont,1,int(f),int(c))
                     lista.append(tejido)
-                    print("fila "+str(lista[cont]))
+
+                   
                  cont+=1   
                  print("*********************")
     x.Imprimir()
 def CrearMatriz(size):
-    matrizOrtogonal = MatrizOrtogonal()
+ 
     for i in range(0,size):
      for j in range(0,size):
-      matrizOrtogonal.insertarDato(1,i,j)
-  
-    #matrizOrtogonal.insertarDato(0,0,1)
-    matrizOrtogonal.recorrerMatriz()
+      matrizOrtogonal.insertarDato(0,i,j)
+   # matrizOrtogonal.recorrerMatriz()
+    
 def menu():
     while True:
         print(Fore.LIGHTBLACK_EX+"----MENU----")
         print(Fore.CYAN+'1. Cargar Archivo')
         print(Fore.CYAN+'2. Seleccionar Paciente')
-        print(Fore.CYAN+'2. Graficar tejido del paciente ')
-        print(Fore.CYAN+'2. Obtener diagnóstico ')
-        print(Fore.CYAN+'2. Salir')
+        print(Fore.CYAN+'3. Graficar tejido del paciente ')
+        print(Fore.CYAN+'. Salir')
 
-        opcion=input(Fore.YELLOW+'Ingrese una opcion ')
+        opcion=input(Fore.WHITE+'Ingrese una opcion ')
         if opcion=="1":
             Filename = input(Fore.BLUE+'Ingrese ruta del archivo: ')
             file =  Filename
             cargarArchivo(file)
-        if opcion=="2":
+        elif opcion=="2":
             nom = input(Fore.BLUE+'Ingrese nombre del paciente: ')
             paciente = x.getPaciente(nom)
 
             if paciente is None: 
                 print(Fore.RED+'> Nombre incorrecto o no registrado')
             else:
-                print(Fore.GREEN+'Paciente:', paciente.nombre,"edad: ",paciente.edad, "id: "+ str(paciente.id))
+                print(Fore.GREEN+'Paciente:', paciente.nombre,"edad: ",paciente.edad)
+                print(Fore.GREEN+'Graficando Tejido inicial')
+                index=paciente.id
+                tam=lsize[index]
+                print(str(tam))
+                CrearMatriz(tam)
                 size=len(lista)
-                print(size)
                 for i in range(0,size-1):
                     if paciente.id==lista[i].id :
-                        print("fila "+str(lista[i].f)+" columna "+str(lista[i].f))
-
+                        
+                        fx=lista[i].f
+                        fila=int(fx)
+                        cx=lista[i].c
+                        columna=int(cx)
+                        matrizOrtogonal.insertarDato(1,fila,columna)
+                        
+        elif opcion=="3":
+            matrizOrtogonal.recorrerMatriz()
+             
 menu()
 
     

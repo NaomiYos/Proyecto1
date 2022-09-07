@@ -1,8 +1,9 @@
+from graphviz import Digraph
 class Celula:
-   def __init__(self,estado,f,c):
-    self.estado=estado
-    self.f=f
-    self.c=c
+   def __init__(self):
+    self.estado=None
+    self.f=None
+    self.c=None
     self.derecha = None
     self.izquierda = None
     self.arriba = None
@@ -106,7 +107,7 @@ class MatrizOrtogonal:
             # indice actual es igual a el nuevo índice
             if tmp.c == nodo.c :
                 # no hacer nada, el dato se sobre escribe
-                tmp.dato = nodo.dato
+                tmp.estado = nodo.estado
                 return tmp
 
             # indice actual es menor, pero el siguiente es mayor
@@ -139,7 +140,7 @@ class MatrizOrtogonal:
             # indice actual es igual a el nuevo índice
             if tmp.f == nodo.f :
                 # no hacer nada se sobre escribe
-                tmp.dato = nodo.dato
+                tmp.estado = nodo.estado
                 return tmp
 
             # indice actual es menor, pero el siguiente es mayor
@@ -165,12 +166,12 @@ class MatrizOrtogonal:
         nuevo = Celula()
         nuevo.f = f
         nuevo.c = c
-        nuevo.dato = dato
+        nuevo.estado = dato
 
         # indexar/apuntar nodo nuevo en indice vertical
         nuevo = self.insertarVertical(nuevo, indiceHorizontal) 
         nuevo = self.insertarHorizontal(nuevo, indiceVertical)
-        print("Nodo insertado...")
+        #print("Nodo insertado...")
         pass
     
     def recorrerMatriz(self):
@@ -180,6 +181,7 @@ class MatrizOrtogonal:
         dot.node_attr.update(shape="box")
         dot.node_attr['style'] = 'filled'
         dot.attr(rankdir = "TB")
+       # dot.attr(rankdir = "0.5")
        
         contSubgrap = 1
         
@@ -224,9 +226,9 @@ class MatrizOrtogonal:
         
         nodo = nodoE
         id = str(nodo.c)+"_"+str(nodo.f)
-        if nodo.dato==1:
-            grafo.node(id," ",color="black",group=str(nodo.f))
-        elif nodo.dato==0:
+        if nodo.estado==1:
+            grafo.node(id," ",color="green",group=str(nodo.f))
+        elif nodo.estado==0:
             grafo.node(id," ",fillcolor="white",group=str(nodo.f))
         
     def graficarFlechas(self, grafo, nodoE):
