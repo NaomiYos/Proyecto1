@@ -1,10 +1,11 @@
-#from tkinter.tix import Tree
+
 import xml.etree.cElementTree as ET
+
 from listadatos import Listasimple
 from Matriz import MatrizOrtogonal 
 from colorama import Fore, Back, Style
 x=Listasimple()
-matrizOrtogonal = MatrizOrtogonal()
+matriz = MatrizOrtogonal()
 class CelulaLista:
    def __init__(self,id,estado,f,c):
     self.id=id
@@ -15,9 +16,10 @@ class CelulaLista:
         return str(self.__dict__)
 lista=[]
 lsize=[]
+
 def cargarArchivo(ruta):
-    archivo= ET.parse(ruta)
-    raiz=archivo.getroot()
+    Tree=ET.parse(ruta)
+    raiz=Tree.getroot()
    
    # print(raiz)
     cont=0 
@@ -45,26 +47,26 @@ def cargarArchivo(ruta):
                 if mat%10 !=0:
                  print("matriz no es múltiplo de 10, ingrese otra matriz")
                 else:
-                  lsize.append(mat)  
-                  print("")
+                    lsize.append(mat)  
+                  #print("")
             for reja in subelem.iter('rejilla'):
                  for celda in reja.iter('celda'):
                     
                     f=celda.attrib['f']
                     c=celda.attrib['c']
-                    print("filas "+f+"columnas "+c+"contador "+ str(cont))
+                    #print("filas "+f+"columnas "+c+"contador "+ str(cont))
                     tejido=CelulaLista(cont,1,int(f),int(c))
                     lista.append(tejido)
 
                    
                  cont+=1   
                  print("*********************")
-    x.Imprimir()
+   # x.Imprimir()
 def CrearMatriz(size):
  
     for i in range(0,size):
      for j in range(0,size):
-      matrizOrtogonal.insertarDato(0,i,j)
+      matriz.insertarDato(0,i,j)
    # matrizOrtogonal.recorrerMatriz()
     
 def menu():
@@ -91,7 +93,7 @@ def menu():
                 print(Fore.GREEN+'Graficando Tejido inicial')
                 index=paciente.id
                 tam=lsize[index]
-                print(str(tam))
+                
                 CrearMatriz(tam)
                 size=len(lista)
                 for i in range(0,size-1):
@@ -101,11 +103,11 @@ def menu():
                         fila=int(fx)
                         cx=lista[i].c
                         columna=int(cx)
-                        matrizOrtogonal.insertarDato(1,fila,columna)
+                        matriz.insertarDato(1,fila,columna)
                         
         elif opcion=="3":
-            matrizOrtogonal.recorrerMatriz()
+            #CrearMatriz(10)
+            print(str(tam))
+            matriz.recorrerMatriz()
              
 menu()
-
-    
